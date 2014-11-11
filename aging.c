@@ -1,7 +1,66 @@
-void agingPageAlgo(int *memRequest, int physicalMemSize, int virtMemSize)
+//return the first mem slot that is available if there is free memory availble, return -1
+int findFirstAvailMem(int *physicalMem, int size)
 {
+  for (int i = 0 ; i <size; i++)
+  {
+    if (physicalMem[i] == -1)
+    {
+      return i;
+    }
+  }
+  return -1;
+}
+
+
+void updateAge(int *agingTable, int size, int accessedIndex)
+{
+    agingTable[i] = agingTable[i]/2;
+    agingTable[i] = agingTable[i] + 1;
+}
+
+int findOldestPageIndex(int *agingTable, int size)
+{
+  int index = 0;
+  for (int i = 0; i<size; i++)
+  {
+    if (agingTable[i]< agingTable[index])
+    {
+      index = i;
+    }
+  }
+  return index;
+}
+
+
+int existe(int *physicalMem, int size, int request)
+{
+  for (int i = 0 ; i<size; i++)
+  {
+    if (request == physicalMem[i])
+    {
+      return i;
+    }
+  }
+  return 0;
+}
+
+
+void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
+{
+
+
+  int missedCount = 0;
   //On define un tableau pour record l'age de chaque page
   int agingTable[physicalMemSize] = {};
+  int physicalMem[pysicalMemSize] = {};
+
+  //initialize the memory content to -1, which means not occupied
+  for (int i = 0; i< physicalMemSize; i++)
+  {
+    pysicalMem[i] = -1;
+  }
+
+
   //initialiser chaque age de page
   for (int i = 0; i< physicalMemSize; i++)
   {
@@ -13,10 +72,10 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int virtMemSize)
   //pour eviter le probleme qui se produis quand on access zone 1 de page tres frequentement dans la premier period, et puis on accede que zone 2 de VM frequent, on essayer de divider par 2 avant de augementer, c'est pour diminuit l'effect d'access tres anciens;
 
   //Ici on commance la simulation d'access
-  for (int i = 0; i<virtMemSize, i++)
+  for (int i = 0; i<numOfPages, i++)
   {
     //premierement on va voir si la page demande existe deja dans le memoir physical
-    if(existe(memRequest[i]))
+    if(existe(pysicalMem, physicalMemSize, memRequest[i]))
     {
       //OK, la donne demander existe deja dans le memoir physique!
       printf("Cache Hit pour mem request: %d!\n", memRequest[i]);
@@ -25,17 +84,27 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int virtMemSize)
     else
     {
       //Page Fault, on a besion de "Page in"
-      //TODO pagein code
-      //if there is still free phsical memroy available...
-      //
-      //if there is no physical memory available....
-      //TODO page out
-      //TODO page in
-      //TODO return data accessed
-      //
-      //
-      //Apres, on va mettre a jour le tableau de record pour l'age de page
-      //TODO update record tableau code
-      //
-      //
+      printf("En train de faire PAGE IN pour %d...", memRequest[i]);
+      int freeMemIndex = findFirstAvailMem(physicalMem, physicalMemSize); 
+      if (freeMemIndex != -1)
+      {
+        //On a encore de memoir physique
+        physicalMem[freeMemIndex] = memRequest[i];
+        updateAge(agingTable, pysicalMemSize, i);
+      }
+      else
+      {
+        //there is no more pysical memory available....
+        //1. let's find out the oldest page
+        int oldestPage = findOldestPageIndex(agingTable, physicalMemSize);
+        //2. Now let's PAGE OUT this page
+        int physicalMem[oldestPage] = -1;
+        //3. Now paging in the new mem request
+        physicalMem[oldestPage] = memRequest[i];
+        updateAge(agingTable, phsycalMemsize, oldestPage);
+      }
+      missedCount ++;
+    }
+  }
+  printf("Miss rate: %f", missedCount/numofPages);
 }
