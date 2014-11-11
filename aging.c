@@ -68,6 +68,7 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
     agingTable[i] = 0;
   }
 
+  printf("ini finished\n");
   //Ici, on va lance la simlation l'acess de memoire/page
   //Sur chaque access(clock), l'age de page accede est augemente par 1, pour les autre pages, l'age augement rest la meme;
   //pour eviter le probleme qui se produis quand on access zone 1 de page tres frequentement dans la premier period, et puis on accede que zone 2 de VM frequent, on essayer de divider par 2 avant de augementer, c'est pour diminuit l'effect d'access tres anciens;
@@ -79,17 +80,18 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
     if(existe(physicalMem, physicalMemSize, memRequest[i]))
     {
       //OK, la donne demander existe deja dans le memoir physique!
-      printf("Cache Hit pour mem request: %d!\n", memRequest[i]);
+      printf("Cache Hit for memory access: %d!\n", memRequest[i]);
       continue;
     }
     else
     {
       //Page Fault, on a besion de "Page in"
-      printf("En train de faire PAGE IN pour %d...", memRequest[i]);
+      printf("Page fault for memory access: %d\n", memRequest[i]);
       int freeMemIndex = findFirstAvailMem(physicalMem, physicalMemSize); 
       if (freeMemIndex != -1)
       {
         //On a encore de memoir physique
+        printf("We still got free Memeory, loading %d\n", memRequest[i]);
         physicalMem[freeMemIndex] = memRequest[i];
         updateAge(agingTable, physicalMemSize, i);
       }

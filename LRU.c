@@ -59,10 +59,8 @@ int LRU(int*arr,int memSize,int pageSize)
 {
 	int nPageFault=0,i=0;
 	int memNum;
-	int replace;
 	Page*pageArr=malloc(memSize*sizeof(Page));
 	init(pageArr,memSize);
-	printf("the sequence replaced : %d\t");
 	for(i=0;i<pageSize;i++)
 	{
 		if((memNum=isExist(pageArr,memSize,arr[i]))>=0)
