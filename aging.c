@@ -2,7 +2,8 @@
 //return the first mem slot that is available if there is free memory availble, return -1
 int findFirstAvailMem(int *physicalMem, int size)
 {
-  for (int i = 0 ; i <size; i++)
+  int i = 0;
+  for (i = 0 ; i <size; i++)
   {
     if (physicalMem[i] == -1)
     {
@@ -22,7 +23,8 @@ void updateAge(int *agingTable, int size, int accessedIndex)
 int findOldestPageIndex(int *agingTable, int size)
 {
   int index = 0;
-  for (int i = 0; i<size; i++)
+  int i = 0;
+  for ( i = 0; i<size; i++)
   {
     if (agingTable[i]< agingTable[index])
     {
@@ -35,14 +37,15 @@ int findOldestPageIndex(int *agingTable, int size)
 
 int existe(int *physicalMem, int size, int request)
 {
-  for (int i = 0 ; i<size; i++)
+  int i = 0;
+  for (i = 0 ; i<size; i++)
   {
     if (request == physicalMem[i])
     {
       return i;
     }
   }
-  return 0;
+  return -1;
 }
 
 
@@ -56,14 +59,15 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
   int *physicalMem =malloc(physicalMemSize*sizeof(int));
 
   //initialize the memory content to -1, which means not occupied
-  for (int i = 0; i< physicalMemSize; i++)
+  int i = 0;
+  for (i = 0; i< physicalMemSize; i++)
   {
     physicalMem[i] = -1;
   }
 
 
   //initialiser chaque age de page
-  for (int i = 0; i< physicalMemSize; i++)
+  for (i = 0; i< physicalMemSize; i++)
   {
     agingTable[i] = 0;
   }
@@ -74,10 +78,10 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
   //pour eviter le probleme qui se produis quand on access zone 1 de page tres frequentement dans la premier period, et puis on accede que zone 2 de VM frequent, on essayer de divider par 2 avant de augementer, c'est pour diminuit l'effect d'access tres anciens;
 
   //Ici on commance la simulation d'access
-  for (int i = 0; i<numOfPages; i++)
+  for (i = 0; i<numOfPages; i++)
   {
     //premierement on va voir si la page demande existe deja dans le memoir physical
-    if(existe(physicalMem, physicalMemSize, memRequest[i]))
+    if(existe(physicalMem, physicalMemSize, memRequest[i]) != -1)
     {
       //OK, la donne demander existe deja dans le memoir physique!
       printf("Cache Hit for memory access: %d!\n", memRequest[i]);
