@@ -32,9 +32,9 @@ int Random(int*arr,int memSize,int pageSize)
 	srand(time(NULL));
 	int nPageFault=0,i=0;
 	int memNum;
-	int*pageArr=malloc(memSize*sizeof(int));
+	int*pageArr=(int*)malloc(memSize*sizeof(int));
 	initial(pageArr,memSize);
-	printf("Les victimes sont: ");
+	//printf("Les victimes sont: ");
 	for(i=0;i<pageSize;i++)
 	{
 		if((memNum=isEx(pageArr,memSize,arr[i]))<0)
@@ -49,9 +49,9 @@ int Random(int*arr,int memSize,int pageSize)
 			nPageFault++;
 		}
 	}
-	printf("\n");
-	printf("Numero de Page Faults:%d\n",nPageFault);
+	//printf("\n");
+	//printf("Numero de Page Faults:%d\n",nPageFault);
 	free(pageArr);
-	return 0;
+	return nPageFault;
 	
 }

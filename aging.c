@@ -14,23 +14,70 @@ int findFirstAvailMem(int *physicalMem, int size)
 }
 
 
-void updateAge(int *agingTable, int size, int accessedIndex)
+void updateAge(unsigned *agingTable, int size, int accessedIndex)
 {
-    agingTable[accessedIndex] = agingTable[accessedIndex]/2;
-    agingTable[accessedIndex] = agingTable[accessedIndex] + 1;
+  int j = 0;
+  for (j = 0 ; j<size; j++)
+  {
+     //printf("*%u*", agingTable[j]);
+  }
+  //printf("\n");
+  //printf("To update @index accessedIndex: %d", accessedIndex);
+
+	int i = 0;
+	for (i = 0 ; i< size; i++)
+	{
+		if (i == accessedIndex)
+		{
+		unsigned data = agingTable[accessedIndex];
+		unsigned sign = 1;
+		sign = sign<<(sizeof(unsigned)*8 - 1);	
+		//printf("sign: %u\n", sign);
+		//printf("data1: %u\n", data);
+
+		data = data>>1;
+		data = data|sign;
+		//printf("data2: %u to be entered in %d \n", data, accessedIndex);
+		agingTable[accessedIndex] = data;
+
+		}
+		else
+		{
+		unsigned data = agingTable[i];
+		data = data>>1;
+		agingTable[i] = data;
+		}
+	}
+
+  j = 0;
+  for (j = 0 ; j<size; j++)
+  {
+     //printf("*%u*", agingTable[j]);
+  }
+  //printf("\n");
+
 }
 
-int findOldestPageIndex(int *agingTable, int size)
+int findOldestPageIndex(unsigned *agingTable, int size)
 {
   int index = 0;
+  int min = 0;
   int i = 0;
   for ( i = 0; i<size; i++)
   {
-    if (agingTable[i]< agingTable[index])
+    if (agingTable[i] <= min)
     {
-      index = i;
+	min = agingTable[i];
+	index = i ;
     }
   }
+
+  int j = 0;
+  for (j = 0 ; j<size; j++)
+  {
+     //printf("*%u*", agingTable[j]);
+  }
+  //printf("least, %d\n", index);
   return index;
 }
 
@@ -49,13 +96,12 @@ int existe(int *physicalMem, int size, int request)
 }
 
 
-void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
+int agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
 {
-
 
   int missedCount = 0;
   //On define un tableau pour record l'age de chaque page
-  int *agingTable = malloc(physicalMemSize*sizeof(int));
+  unsigned *agingTable = malloc(physicalMemSize*sizeof(unsigned));
   int *physicalMem =malloc(physicalMemSize*sizeof(int));
 
   //initialize the memory content to -1, which means not occupied
@@ -84,14 +130,15 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
   for (i = 0; i<numOfPages; i++)
   {
     //premierement on va voir si la page demande existe deja dans le memoir physical
-    if(existe(physicalMem, physicalMemSize, memRequest[i]) != -1)
+    int location = existe(physicalMem, physicalMemSize, memRequest[i]);
+    if(location != -1)
     {
       //OK, la donne demander existe deja dans le memoir physique!
       if (debug)
       {
       printf("Cache Hit for memory access: %d!\n", memRequest[i]);
       }
-      continue;
+      updateAge(agingTable, physicalMemSize, location);
     }
     else
     {
@@ -109,7 +156,7 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
           printf("We still got free Memeory, loading %d\n", memRequest[i]);
         }
         physicalMem[freeMemIndex] = memRequest[i];
-        updateAge(agingTable, physicalMemSize, i);
+        updateAge(agingTable, physicalMemSize, freeMemIndex);
       }
       else
       {
@@ -125,5 +172,8 @@ void agingPageAlgo(int *memRequest, int physicalMemSize, int numOfPages)
       missedCount ++;
     }
   }
-  printf("Miss rate: %.2f \n", (float)missedCount/numOfPages);
+  ///printf("Miss rate: %.2f \n", (float)missedCount/numOfPages);
+  //free(agingTable);
+  //free(physicalMem);
+  return missedCount;
 }

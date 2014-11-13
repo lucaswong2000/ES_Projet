@@ -6,5 +6,5 @@ typedef struct memPage{
 	int pageNum;
 	struct memPage*next;
 }memPage;
-void linkLRU(int*arr,int memSize,int pageSize );
+int linkLRU(int*arr,int memSize,int pageSize );
 #endif

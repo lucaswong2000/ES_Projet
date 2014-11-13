@@ -1,5 +1,5 @@
 #include"linkLRU.h"
-void linkLRU(int*arr,int memSize,int pageSize ){
+int linkLRU(int*arr,int memSize,int pageSize ){
 	memPage*p=NULL;//used to go through the link
 	memPage*head=NULL;//point to the head of the link
 	memPage*pre=head;//save the pointer of the previous node of p
@@ -101,8 +101,8 @@ void linkLRU(int*arr,int memSize,int pageSize ){
 			
 		}
 	}
-	printf("\n");
-	printf("number of page faults:%d\n",nPageFault);
+	//printf("\n");
+	//printf("number of page faults:%d\n",nPageFault);
 	p=head;
 	pre=p;
 	while(p!=NULL)
@@ -111,4 +111,5 @@ void linkLRU(int*arr,int memSize,int pageSize ){
 		free(pre);
 		pre=p;	
 	}
+	return nPageFault;
 }

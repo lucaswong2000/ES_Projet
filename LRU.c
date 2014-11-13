@@ -59,9 +59,9 @@ int LRU(int*arr,int memSize,int pageSize)
 {
 	int nPageFault=0,i=0;
 	int memNum;
-	Page*pageArr=malloc(memSize*sizeof(Page));
+	Page*pageArr=(Page*)malloc(memSize*sizeof(Page));
 	init(pageArr,memSize);
-	printf("Les victimes sont: ");
+	//printf("Les victimes sont: ");
 	for(i=0;i<pageSize;i++)
 	{
 		if((memNum=isExist(pageArr,memSize,arr[i]))>=0)
@@ -85,9 +85,9 @@ int LRU(int*arr,int memSize,int pageSize)
 			increaseTime(pageArr,memSize,memNum);
 		}
 	}
-	printf("\n");
-	printf("Numero de Page Faults:%d\n",nPageFault);
+	//printf("\n");
+	//printf("Numero de Page Faults:%d\n",nPageFault);
 	free(pageArr);
-	return 0;
+	return nPageFault;
 	
 }
