@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "LRU.h"
 #include "linkLRU.h"
 #include "aging.h"
@@ -5,6 +6,12 @@
 #include <stdlib.h>
 #include <time.h>
 
+=======
+#include"LRU.h"
+#include"linkLRU.h"
+#include "random.h"
+#include<time.h>
+>>>>>>> random
 #define NUM_PAGES 20
 #define NUM_PAGES1 3000
 #define NUM_PAGES2 5000
@@ -60,12 +67,20 @@ int main()
 	RAND(arr7,NUM_PAGES7,MAX_VALUE3);
 
 	memSize=33;
+	//scanf("%d",&memSize);
+	memSize=20;
 	printf("-----------------------LRU--------------------------\n");
 	LRU(arr,memSize,NUM_PAGES);
 	printf("-----------------------FIFO--------------------------\n");
 	
 	printf("-----------------------Aging--------------------------\n");
-        agingPageAlgo(arr3, memSize, NUM_PAGES);
+        agingPageAlgo(arr3, memSize, NUM_PAGES	);
+	printf("-----------------------RANDOM--------------------------\n");
+	Random(arr,memSize,NUM_PAGES);	
+	//linkLRU(arr,memSize,NUM_PAGES);
+	LRU(arr7,memSize,NUM_PAGES7);
+	Random(arr7,memSize,NUM_PAGES7);
+	//linkLRU(arr2,memSize,10000);
 	return 0;
 	
 }
