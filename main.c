@@ -1,5 +1,6 @@
 #include"LRU.h"
 #include"linkLRU.h"
+#include "random.h"
 #include<time.h>
 #define NUM_PAGES 20
 #define NUM_PAGES1 50
@@ -61,15 +62,17 @@ int main()
 	RAND(arr7,NUM_PAGES7,MAX_VALUE3);
 
 	//scanf("%d",&memSize);
-	memSize=3;
+	memSize=20;
 	printf("-----------------------LRU--------------------------\n");
 	LRU(arr,memSize,NUM_PAGES);
 	printf("-----------------------FIFO--------------------------\n");
 	
 	printf("-----------------------Aging--------------------------\n");
+	printf("-----------------------RANDOM--------------------------\n");
+	Random(arr,memSize,NUM_PAGES);	
 	//linkLRU(arr,memSize,NUM_PAGES);
-	//LRU(arr2,memSize,10000);
-	
+	LRU(arr7,memSize,NUM_PAGES7);
+	Random(arr7,memSize,NUM_PAGES7);
 	//linkLRU(arr2,memSize,10000);
 	return 0;
 	

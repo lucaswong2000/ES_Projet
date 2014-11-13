@@ -78,7 +78,7 @@ int LRU(int*arr,int memSize,int pageSize)
 		}else{
 			memNum=maxTime(pageArr,memSize);
 			nPageFault++;
-			printf("%d  ",pageArr[memNum].num);
+	//		printf("%d  ",pageArr[memNum].num);
 			pageArr[memNum].status=1;
 			pageArr[memNum].time=0;
 			pageArr[memNum].num=arr[i];
