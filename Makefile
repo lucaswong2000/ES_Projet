@@ -2,7 +2,7 @@ EXECUTABLE = main
 COMPILE = gcc
 all:$(EXECUTABLE)
 total: clear $(EXECUTABLE) run
-clear:
+clean:
 	$(RM) *.o $(EXECUTABLE)
 $(EXECUTABLE): main.o LRU.o linkLRU.o random.o aging.o fifo.o
 	$(COMPILE) -Wall -g main.o LRU.o linkLRU.o random.o aging.o fifo.o -o $(EXECUTABLE) 

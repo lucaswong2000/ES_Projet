@@ -16,14 +16,6 @@ int findFirstAvailMem(int *physicalMem, int size)
 
 void updateAge(unsigned *agingTable, int size, int accessedIndex)
 {
-  int j = 0;
-  for (j = 0 ; j<size; j++)
-  {
-     //printf("*%u*", agingTable[j]);
-  }
-  //printf("\n");
-  //printf("To update @index accessedIndex: %d", accessedIndex);
-
 	int i = 0;
 	for (i = 0 ; i< size; i++)
 	{
@@ -49,13 +41,6 @@ void updateAge(unsigned *agingTable, int size, int accessedIndex)
 		}
 	}
 
-  j = 0;
-  for (j = 0 ; j<size; j++)
-  {
-     //printf("*%u*", agingTable[j]);
-  }
-  //printf("\n");
-
 }
 
 int findOldestPageIndex(unsigned *agingTable, int size)
@@ -72,12 +57,6 @@ int findOldestPageIndex(unsigned *agingTable, int size)
     }
   }
 
-  int j = 0;
-  for (j = 0 ; j<size; j++)
-  {
-     //printf("*%u*", agingTable[j]);
-  }
-  //printf("least, %d\n", index);
   return index;
 }
 

@@ -20,7 +20,10 @@ int main()
 	int i=0;
 	int j=0;
 	srand(time(NULL));
-	printf(" ");
+	printf("\n=============================================================\n");
+	printf("==Performance based on different size of request sequence:===");
+	printf("\n=============================================================\n");
+
 	for(j=0;j<11;j++)
 	{
 		int total1=0;
@@ -35,18 +38,19 @@ int main()
 			RAND(arr,Request[j]/3,2*Request[j]/3, 0 , 2*VSIZE/3);
 			RAND(arr,2*Request[j]/3,Request[j], 0 , VSIZE);
 			
-			total1+=LRU(arr,MEM,memSize[j]);
-			total2+=agingPageAlgo(arr,MEM,memSize[j]);
-			total3+=fifo(arr,MEM,memSize[j]);	
-			total4+=Random(arr,MEM,memSize[j]);
+			total1+=LRU(arr,MEM,Request[j]);
+			total2+=agingPageAlgo(arr,MEM,Request[j]);
+			total3+=fifo(arr,MEM,Request[j]);	
+			total4+=Random(arr,MEM,Request[j]);
 		}
-		printf("LRU rate   :%f\t",(float)(total1/30)/Request[j]);
-		printf("Aging rate :%f\t",(float)(total2/30)/Request[j]);
-		printf("fifo rate  :%f\t",(float)(total3/30)/Request[j]);
-		printf("Random rate:%f\n",(float)(total4/30)/Request[j]);
-		
+		printf("LRU:%.4f\t",(float)(total1/30)/Request[j]);
+		printf("Aging:%.4f\t",(float)(total2/30)/Request[j]);
+		printf("fifo:%.4f\t",(float)(total3/30)/Request[j]);
+		printf("Random:%.4f\n",(float)(total4/30)/Request[j]);
 	}
-	printf("\n");
+	printf("\n===========================================================\n");
+	printf("==Performance based on different PhysicalMem/VirtualMem:==");
+	printf("\n===========================================================\n");
 	for(j=0;j<17;j++)
 	{
 		int total1=0;
@@ -66,10 +70,10 @@ int main()
 			total3+=fifo(arr,memSize[j],FIXED_SIZE);	
 			total4+=Random(arr,memSize[j],FIXED_SIZE);
 		}
-		printf("LRU rate   :%f\t",(float)(total1/30)/FIXED_SIZE);
-		printf("Aging rate :%f\t",(float)(total2/30)/FIXED_SIZE);
-		printf("fifo rate  :%f\t",(float)(total3/30)/FIXED_SIZE);
-		printf("Random rate:%f\n",(float)(total4/30)/FIXED_SIZE);
+		printf("LRU:%.4f\t",(float)(total1/30)/FIXED_SIZE);
+		printf("Aging:%.4f\t",(float)(total2/30)/FIXED_SIZE);
+		printf("fifo:%.4f\t",(float)(total3/30)/FIXED_SIZE);
+		printf("Random:%.4f\n",(float)(total4/30)/FIXED_SIZE);
 	}
 	return 0;
 	

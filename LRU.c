@@ -66,7 +66,6 @@ int LRU(int*arr,int memSize,int pageSize)
 	{
 		if((memNum=isExist(pageArr,memSize,arr[i]))>=0)
 		{
-		//	printf("aaaaa\n");
 			pageArr[memNum].time=0;
 			increaseTime(pageArr,memSize,memNum);
 		}else if((memNum=isFree(pageArr,memSize))>=0){
@@ -78,14 +77,12 @@ int LRU(int*arr,int memSize,int pageSize)
 		}else{
 			memNum=maxTime(pageArr,memSize);
 			nPageFault++;
-	//		printf("%d  ",pageArr[memNum].num);
 			pageArr[memNum].status=1;
 			pageArr[memNum].time=0;
 			pageArr[memNum].num=arr[i];
 			increaseTime(pageArr,memSize,memNum);
 		}
 	}
-	//printf("\n");
 	//printf("Numero de Page Faults:%d\n",nPageFault);
 	free(pageArr);
 	return nPageFault;
